@@ -24,81 +24,84 @@ class BookListPage extends StatelessWidget {
               return CircularProgressIndicator();
             }
 
-            final List<Widget> widgets = books.map(
-              (book) => Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                child: ListTile(
-                  title: Text(book.title),
-                  subtitle: Text(book.author),
-                ),
-                secondaryActions: <Widget>[
-                  IconSlideAction(
-                    caption: '編集',
-                    color: Colors.green,
-                    icon: Icons.edit,
-                    onTap: () async {
-                      // 編集画面へ遷移
-                      final String? title = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditBookPage(book),
-                        ),
-                      );
+            final List<Widget> widgets = books
+                .map(
+                  (book) => Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    child: ListTile(
+                      title: Text(book.title),
+                      subtitle: Text(book.author),
+                    ),
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                        caption: '編集',
+                        color: Colors.green,
+                        icon: Icons.edit,
+                        onTap: () async {
+                          // 編集画面へ遷移
+                          final String? title = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditBookPage(book),
+                            ),
+                          );
 
-                      if (title != null) {
-                        final snackBar = SnackBar(
-                          backgroundColor: Colors.green,
-                          content: Text('$title を編集しました'),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
+                          if (title != null) {
+                            final snackBar = SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text('$title を編集しました'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
 
-                      model.fetchBookList();
-                    },
+                          model.fetchBookList();
+                        },
+                      ),
+                      IconSlideAction(
+                        caption: '削除',
+                        color: Colors.red,
+                        icon: Icons.delete,
+                        onTap: () {
+                          // TODO: 削除処理
+                        },
+                      ),
+                    ],
                   ),
-                  IconSlideAction(
-                    caption: '削除',
-                    color: Colors.red,
-                    icon: Icons.delete,
-                    onTap: () {
-                      // TODO: 削除処理
-                    },
-                  ),
-                ],
-              ),
-            ).toList();
+                )
+                .toList();
             return ListView(
               children: widgets,
             );
           }),
         ),
-        floatingActionButton: Consumer<BookListModel>(builder: (context, model, child) {
-            return FloatingActionButton(
-              onPressed: () async {
-                // 画面遷移
-                final bool? isAdded = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddBookPage(),
-                      fullscreenDialog: true,
-                    ),
+        floatingActionButton:
+            Consumer<BookListModel>(builder: (context, model, child) {
+          return FloatingActionButton(
+            onPressed: () async {
+              // 画面遷移
+              final bool? isAdded = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddBookPage(),
+                  fullscreenDialog: true,
+                ),
+              );
+
+              if (isAdded != null && isAdded) {
+                final snackBar = SnackBar(
+                  backgroundColor: Colors.green,
+                  content: Text('本を追加しました'),
                 );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
 
-                if (isAdded != null && isAdded) {
-                  final snackBar = SnackBar(
-                    backgroundColor: Colors.green,
-                    content: Text('本を追加しました'),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
-
-                model.fetchBookList();
-              },
-              tooltip: 'Increment',
-              child: Icon(Icons.add),
-            );
-          }
-        ),
+              model.fetchBookList();
+            },
+            tooltip: 'Increment',
+            child: Icon(Icons.add),
+          );
+        }),
       ),
     );
   }

@@ -24,22 +24,17 @@ class EditBookPage extends StatelessWidget {
                 children: [
                   TextField(
                     controller: model.titleController,
-                    decoration: InputDecoration(
-                        hintText: '本のタイトル'
-                    ),
+                    decoration: InputDecoration(hintText: '本のタイトル'),
                     onChanged: (text) {
                       model.setTitle(text);
                     },
-
                   ),
                   SizedBox(
                     height: 8,
                   ),
                   TextField(
                     controller: model.authorController,
-                    decoration: InputDecoration(
-                        hintText: '本の著者'
-                    ),
+                    decoration: InputDecoration(hintText: '本の著者'),
                     onChanged: (text) {
                       model.setAuthor(text);
                     },
@@ -47,19 +42,24 @@ class EditBookPage extends StatelessWidget {
                   SizedBox(
                     height: 32,
                   ),
-                  ElevatedButton(onPressed: model.isUpdated() ? () async {
-                    // 追加処理
-                    try {
-                      await model.updateBook();
-                      Navigator.of(context).pop(model.title);
-                    } catch (e) {
-                      final snackBar = SnackBar(
-                        backgroundColor: Colors.red,
-                        content: Text(e.toString()),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                  } : null, child: Text('更新')),
+                  ElevatedButton(
+                      onPressed: model.isUpdated()
+                          ? () async {
+                              // 追加処理
+                              try {
+                                await model.updateBook();
+                                Navigator.of(context).pop(model.title);
+                              } catch (e) {
+                                final snackBar = SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(e.toString()),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
+                            }
+                          : null,
+                      child: Text('更新')),
                 ],
               ),
             );

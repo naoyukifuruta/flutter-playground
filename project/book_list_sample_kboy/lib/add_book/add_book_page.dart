@@ -19,9 +19,7 @@ class AddBookPage extends StatelessWidget {
               child: Column(
                 children: [
                   TextField(
-                    decoration: InputDecoration(
-                      hintText: '本のタイトル'
-                    ),
+                    decoration: InputDecoration(hintText: '本のタイトル'),
                     onChanged: (text) {
                       model.title = text;
                     },
@@ -30,9 +28,7 @@ class AddBookPage extends StatelessWidget {
                     height: 8,
                   ),
                   TextField(
-                    decoration: InputDecoration(
-                        hintText: '本の著者'
-                    ),
+                    decoration: InputDecoration(hintText: '本の著者'),
                     onChanged: (text) {
                       model.author = text;
                     },
@@ -40,19 +36,21 @@ class AddBookPage extends StatelessWidget {
                   SizedBox(
                     height: 32,
                   ),
-                  ElevatedButton(onPressed: () async {
-                    // 追加処理
-                    try {
-                      await model.addBook();
-                      Navigator.of(context).pop(true);
-                    } catch (e) {
-                      final snackBar = SnackBar(
-                        backgroundColor: Colors.red,
-                        content: Text(e.toString()),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                  }, child: Text('追加')),
+                  ElevatedButton(
+                      onPressed: () async {
+                        // 追加処理
+                        try {
+                          await model.addBook();
+                          Navigator.of(context).pop(true);
+                        } catch (e) {
+                          final snackBar = SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(e.toString()),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                      },
+                      child: Text('追加')),
                 ],
               ),
             );
