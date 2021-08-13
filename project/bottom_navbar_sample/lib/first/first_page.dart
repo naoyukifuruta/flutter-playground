@@ -9,6 +9,7 @@ class FirstPage extends StatelessWidget {
     return ChangeNotifierProvider<FirstModel>(
       create: (_) => FirstModel(),
       child: Scaffold(
+        backgroundColor: Colors.amber,
         body: Center(
           child: Consumer<FirstModel>(builder: (context, model, child) {
             return Text('First Page.');

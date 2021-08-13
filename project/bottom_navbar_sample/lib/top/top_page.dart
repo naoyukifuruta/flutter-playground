@@ -1,4 +1,6 @@
 import 'package:bottom_navbar_sample/first/first_page.dart';
+import 'package:bottom_navbar_sample/second/second_page.dart';
+import 'package:bottom_navbar_sample/third/third_page.dart';
 import 'package:bottom_navbar_sample/top/top_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,15 +38,15 @@ class TopPage extends StatelessWidget {
                   type: BottomNavigationBarType.fixed,
                   items: [
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.edit),
+                      icon: Icon(Icons.today),
                       label: _tabNames[0],
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.group),
+                      icon: Icon(Icons.history),
                       label: _tabNames[1],
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.insights),
+                      icon: Icon(Icons.settings),
                       label: _tabNames[2],
                     ),
                   ],
@@ -61,8 +63,8 @@ class TopPage extends StatelessWidget {
     return Stack(
       children: <Widget>[
         _tabPage(currentIndex, 0, FirstPage()),
-        _tabPage(currentIndex, 1, FirstPage()),
-        _tabPage(currentIndex, 2, FirstPage()),
+        _tabPage(currentIndex, 1, SecondPage()),
+        _tabPage(currentIndex, 2, ThirdPage()),
       ],
     );
   }
