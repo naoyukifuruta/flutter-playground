@@ -20,4 +20,11 @@ class BookListModel extends ChangeNotifier {
     this.books = books;
     notifyListeners();
   }
+
+  Future deleteBook(Book book) async {
+    return await FirebaseFirestore.instance
+        .collection('books')
+        .doc(book.id)
+        .delete();
+  }
 }

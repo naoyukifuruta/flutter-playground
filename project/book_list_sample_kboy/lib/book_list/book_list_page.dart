@@ -2,8 +2,8 @@ import 'package:book_list_sample_kboy/add_book/add_book_page.dart';
 import 'package:book_list_sample_kboy/domain/book.dart';
 import 'package:book_list_sample_kboy/edit_book/edit_book_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 
 import 'book_list_model.dart';
 
@@ -62,8 +62,8 @@ class BookListPage extends StatelessWidget {
                         caption: '削除',
                         color: Colors.red,
                         icon: Icons.delete,
-                        onTap: () {
-                          // TODO: 削除処理
+                        onTap: () async {
+                          await showConfirmDialog(context, book, model);
                         },
                       ),
                     ],
@@ -103,6 +103,39 @@ class BookListPage extends StatelessWidget {
           );
         }),
       ),
+    );
+  }
+
+  Future showConfirmDialog(
+      BuildContext context, Book book, BookListModel model) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return AlertDialog(
+          title: Text("削除の確認"),
+          content: Text("『${book.title}』を削除しますか？"),
+          actions: [
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text("OK"),
+              onPressed: () async {
+                await model.deleteBook(book);
+                Navigator.pop(context);
+                final snackBar = SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text('${book.title}を削除しました'),
+                );
+                model.fetchBookList();
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
