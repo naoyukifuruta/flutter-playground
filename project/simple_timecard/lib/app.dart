@@ -28,18 +28,15 @@ class TopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double deviceHeight = MediaQuery.of(context).size.height;
     return ChangeNotifierProvider<AppModel>(
       create: (_) => AppModel(),
       child: Consumer<AppModel>(
         builder: (context, model, child) {
           return Scaffold(
               appBar: AppBar(
-                toolbarHeight: deviceHeight * 0.06,
                 centerTitle: true,
                 title: Text(
                   _tabNames[model.currentIndex],
-                  style: TextStyle(fontSize: 20),
                 ),
                 backgroundColor: Colors.blue,
               ),
