@@ -17,7 +17,7 @@ class TodayPage extends StatelessWidget {
                   height: 48,
                 ),
                 Text(
-                  model.datetimeString,
+                  model.nowDatetimeString,
                   style: TextStyle(
                     fontSize: 20,
                   ),
@@ -35,7 +35,7 @@ class TodayPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '09:00',
+                      model.startTimeString,
                       style: TextStyle(
                         fontSize: 20,
                       ),
@@ -52,7 +52,7 @@ class TodayPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '18:00',
+                      model.endTimeString,
                       style: TextStyle(
                         fontSize: 20,
                       ),
@@ -68,20 +68,24 @@ class TodayPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                          onPressed: () {
-                            print('click!');
-                            // TODO
+                          onPressed: () async {
+                            showProgressDialog(context);
+                            await model.registerStartTime();
+                            hideProgressDialog(context);
+                            showSnackBar(context, '出勤時間を登録しました。');
                           },
-                          child: Text('出勤登録')),
+                          child: Text('出勤打刻')),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                          onPressed: () {
-                            print('click!');
-                            // TODO
+                          onPressed: () async {
+                            showProgressDialog(context);
+                            await model.registerEndTime();
+                            hideProgressDialog(context);
+                            showSnackBar(context, '退勤時間を登録しました。');
                           },
-                          child: Text('退勤登録')),
+                          child: Text('退勤打刻')),
                     ),
                   ],
                 ),
@@ -91,5 +95,31 @@ class TodayPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void showProgressDialog(BuildContext context) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: false,
+        transitionDuration: Duration(milliseconds: 300),
+        barrierColor: Colors.black.withOpacity(0.5),
+        pageBuilder: (BuildContext context, Animation animation,
+            Animation secondaryAnimation) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+  }
+
+  void hideProgressDialog(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  void showSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      backgroundColor: Colors.blue,
+      content: Text(message),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
