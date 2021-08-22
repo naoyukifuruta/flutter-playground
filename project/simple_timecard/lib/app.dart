@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_timecard/history/history_page.dart';
-import 'package:simple_timecard/setting/setting_page.dart';
-import 'package:simple_timecard/today/today_page.dart';
+import 'package:simple_timecard/presentation/history/history_page.dart';
+import 'package:simple_timecard/presentation/setting/setting_page.dart';
+import 'package:simple_timecard/presentation/today/today_page.dart';
 
 import 'app_model.dart';
 

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TodayModel extends ChangeNotifier {
@@ -23,14 +23,14 @@ class TodayModel extends ChangeNotifier {
   }
 
   Future registerStartTime() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 1));
     // TODO: ここでDBに登録する
     startTimeString = DateFormat('hh:mm').format(DateTime.now());
     notifyListeners();
   }
 
   Future registerEndTime() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 1));
     // TODO: ここでDBに登録する
     endTimeString = DateFormat('hh:mm').format(DateTime.now());
     notifyListeners();
