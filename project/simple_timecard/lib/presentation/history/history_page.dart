@@ -23,11 +23,17 @@ class HistoryPage extends StatelessWidget {
                 .map(
                   (timecard) => Card(
                     child: ListTile(
-                      title: Text(DateFormat('yyyy/MM/dd E ')
-                              .format(timecard.targetDate) +
-                          timecard.startTimeString +
-                          ' ' +
-                          timecard.endTimeString),
+                      title: Row(
+                        children: [
+                          Text(DateFormat('yyyy/MM/dd E')
+                              .format(timecard.targetDate)
+                              .padRight(8, "0")),
+                          SizedBox(width: 4),
+                          Text(timecard.startTimeString),
+                          SizedBox(width: 4),
+                          Text(timecard.endTimeString),
+                        ],
+                      ),
                       onTap: () {
                         print(timecard.targetDate.toString());
                       },
