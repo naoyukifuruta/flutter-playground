@@ -72,8 +72,8 @@ class TodayPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
-                        height: 48,
-                        width: 96,
+                        height: 56,
+                        width: 120,
                         child: ElevatedButton(
                             onPressed: () async {
                               showProgressDialog(context);
@@ -81,14 +81,15 @@ class TodayPage extends StatelessWidget {
                               hideProgressDialog(context);
                               showSnackBar(context, '出勤時間を登録しました。');
                             },
-                            child: Text('出勤打刻')),
+                            child:
+                                Text('出勤打刻', style: TextStyle(fontSize: 20))),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
-                        height: 48,
-                        width: 96,
+                        height: 56,
+                        width: 120,
                         child: ElevatedButton(
                             onPressed: () async {
                               showProgressDialog(context);
@@ -96,7 +97,8 @@ class TodayPage extends StatelessWidget {
                               hideProgressDialog(context);
                               showSnackBar(context, '退勤時間を登録しました。');
                             },
-                            child: Text('退勤打刻')),
+                            child:
+                                Text('退勤打刻', style: TextStyle(fontSize: 20))),
                       ),
                     ),
                   ],
