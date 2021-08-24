@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_timecard/domain/timecard.dart';
+import 'package:simple_timecard/presentation/add/add_page.dart';
 
 import 'history_model.dart';
 
@@ -26,8 +27,7 @@ class HistoryPage extends StatelessWidget {
                       title: Row(
                         children: [
                           Text(DateFormat('yyyy/MM/dd E')
-                              .format(timecard.targetDate)
-                              .padRight(8, "0")),
+                              .format(timecard.targetDate)),
                           SizedBox(width: 4),
                           Text(timecard.startTimeString),
                           SizedBox(width: 4),
@@ -52,21 +52,23 @@ class HistoryPage extends StatelessWidget {
           return FloatingActionButton(
             onPressed: () async {
               // 画面遷移
-              // final bool? isAdded = await Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => AddBookPage(),
-              //     fullscreenDialog: true,
-              //   ),
-              // );
-              // if (isAdded != null && isAdded) {
-              //   final snackBar = SnackBar(
-              //     backgroundColor: Colors.green,
-              //     content: Text('本を追加しました'),
-              //   );
-              //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              // }
-              // model.fetchBookList();
+              final bool? isAdded = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddPage(),
+                  fullscreenDialog: true,
+                ),
+              );
+
+              if (isAdded != null && isAdded) {
+                final snackBar = SnackBar(
+                  backgroundColor: Colors.green,
+                  content: Text('追加しました'),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+
+              model.fetchTimeCards();
             },
             tooltip: 'Increment',
             child: Icon(Icons.add),
