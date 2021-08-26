@@ -26,12 +26,27 @@ class HistoryPage extends StatelessWidget {
                     child: ListTile(
                       title: Row(
                         children: [
-                          Text(DateFormat('yyyy/MM/dd E')
-                              .format(timecard.targetDate)),
+                          Text(
+                            DateFormat('yyyy/MM/dd E')
+                                .format(timecard.targetDate),
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
                           SizedBox(width: 4),
-                          Text(timecard.startTimeString),
+                          Text(
+                            timecard.startTimeString,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
                           SizedBox(width: 4),
-                          Text(timecard.endTimeString),
+                          Text(
+                            timecard.endTimeString,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
                         ],
                       ),
                       onTap: () {
@@ -50,6 +65,7 @@ class HistoryPage extends StatelessWidget {
         floatingActionButton:
             Consumer<HistoryModel>(builder: (context, model, child) {
           return FloatingActionButton(
+            backgroundColor: Colors.white,
             onPressed: () async {
               // 画面遷移
               final bool? isAdded = await Navigator.push(
@@ -71,7 +87,10 @@ class HistoryPage extends StatelessWidget {
               model.fetchTimeCards();
             },
             tooltip: 'Increment',
-            child: Icon(Icons.add),
+            child: Icon(
+              Icons.add,
+              color: Colors.black,
+            ),
           );
         }),
       ),

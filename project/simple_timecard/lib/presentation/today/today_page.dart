@@ -75,14 +75,21 @@ class TodayPage extends StatelessWidget {
                         height: 56,
                         width: 120,
                         child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
                             onPressed: () async {
                               showProgressDialog(context);
                               await model.registerStartTime();
                               hideProgressDialog(context);
                               showSnackBar(context, '出勤時間を登録しました。');
                             },
-                            child:
-                                Text('出勤打刻', style: TextStyle(fontSize: 20))),
+                            child: Text('出勤打刻',
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black))),
                       ),
                     ),
                     Padding(
@@ -91,14 +98,21 @@ class TodayPage extends StatelessWidget {
                         height: 56,
                         width: 120,
                         child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
                             onPressed: () async {
                               showProgressDialog(context);
                               await model.registerEndTime();
                               hideProgressDialog(context);
                               showSnackBar(context, '退勤時間を登録しました。');
                             },
-                            child:
-                                Text('退勤打刻', style: TextStyle(fontSize: 20))),
+                            child: Text('退勤打刻',
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black))),
                       ),
                     ),
                   ],

@@ -11,7 +11,13 @@ class AddPage extends StatelessWidget {
       create: (_) => AddModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Add'),
+          title: Text(
+            '追加',
+            style: TextStyle(color: Colors.black),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.black),
         ),
         body: Center(
           child: Consumer<AddModel>(builder: (context, model, child) {
@@ -32,7 +38,21 @@ class AddPage extends StatelessWidget {
                             : Text(''),
                       ),
                       Spacer(flex: 1),
-                      RawMaterialButton(
+                      ElevatedButton.icon(
+                        icon: const Icon(
+                          Icons.date_range,
+                          color: Colors.black,
+                        ),
+                        label: const Text(
+                          '選択',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
                         onPressed: () async {
                           final DateTime? pickedDate = await showDatePicker(
                             context: context,
@@ -43,14 +63,6 @@ class AddPage extends StatelessWidget {
                           );
                           await model.setDate(pickedDate);
                         },
-                        elevation: 4.0,
-                        fillColor: Colors.blue,
-                        child: Icon(
-                          Icons.calendar_today_outlined,
-                          color: Colors.white,
-                        ),
-                        padding: EdgeInsets.all(10.0),
-                        shape: CircleBorder(),
                       ),
                     ],
                   ),
@@ -63,7 +75,21 @@ class AddPage extends StatelessWidget {
                               style: TextStyle(fontSize: 20))
                           : Text(''),
                       Spacer(flex: 1),
-                      RawMaterialButton(
+                      ElevatedButton.icon(
+                        icon: const Icon(
+                          Icons.access_time,
+                          color: Colors.black,
+                        ),
+                        label: const Text(
+                          '選択',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
                         onPressed: () async {
                           final TimeOfDay? pickedTime = await showTimePicker(
                             context: context,
@@ -71,14 +97,6 @@ class AddPage extends StatelessWidget {
                           );
                           await model.setStartTime(pickedTime);
                         },
-                        elevation: 4.0,
-                        fillColor: Colors.blue,
-                        child: Icon(
-                          Icons.access_time,
-                          color: Colors.white,
-                        ),
-                        padding: EdgeInsets.all(10.0),
-                        shape: CircleBorder(),
                       ),
                     ],
                   ),
@@ -91,7 +109,21 @@ class AddPage extends StatelessWidget {
                               style: TextStyle(fontSize: 20))
                           : Text(''),
                       Spacer(flex: 1),
-                      RawMaterialButton(
+                      ElevatedButton.icon(
+                        icon: const Icon(
+                          Icons.access_time,
+                          color: Colors.black,
+                        ),
+                        label: const Text(
+                          '選択',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
                         onPressed: () async {
                           final TimeOfDay? pickedTime = await showTimePicker(
                             context: context,
@@ -99,30 +131,42 @@ class AddPage extends StatelessWidget {
                           );
                           await model.setEndTime(pickedTime);
                         },
-                        elevation: 4.0,
-                        fillColor: Colors.blue,
-                        child: Icon(
-                          Icons.access_time,
-                          color: Colors.white,
-                        ),
-                        padding: EdgeInsets.all(10.0),
-                        shape: CircleBorder(),
                       ),
                     ],
                   ),
                   SizedBox(height: 64),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 48,
-                      width: 96,
-                      child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text(
-                            '登録',
-                            style: TextStyle(fontSize: 20),
-                          )),
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(
+                        height: 48,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () async {
+                              try {
+                                //await model.addBook();
+                                Navigator.of(context).pop(true);
+                              } catch (e) {
+                                final snackBar = SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(e.toString()),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
+                            },
+                            child: Text(
+                              '登録',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.black),
+                            )),
+                      ),
+                    ],
                   ),
                 ],
               ),

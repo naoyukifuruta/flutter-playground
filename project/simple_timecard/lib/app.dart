@@ -21,9 +21,9 @@ class App extends StatelessWidget {
 
 class TopPage extends StatelessWidget {
   final List<String> _tabNames = [
-    "Today",
-    "History",
-    "Setting",
+    "今日",
+    "履歴",
+    "設定",
   ];
 
   @override
@@ -37,14 +37,17 @@ class TopPage extends StatelessWidget {
                 centerTitle: true,
                 title: Text(
                   _tabNames[model.currentIndex],
+                  style: TextStyle(color: Colors.black),
                 ),
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.white,
               ),
               body: _topPageBody(context),
               bottomNavigationBar: BottomNavigationBar(
                 onTap: model.onTabTapped,
                 currentIndex: model.currentIndex,
                 type: BottomNavigationBarType.fixed,
+                selectedItemColor: Colors.black,
+                unselectedItemColor: Colors.black38,
                 items: [
                   BottomNavigationBarItem(
                     icon: Icon(Icons.today),
