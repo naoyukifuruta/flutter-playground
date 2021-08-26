@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_timecard/domain/timecard.dart';
-import 'package:simple_timecard/presentation/add/add_page.dart';
+import 'package:simple_timecard/presentation/edit/edit_page.dart';
 
 import 'history_model.dart';
 
@@ -27,20 +27,19 @@ class HistoryPage extends StatelessWidget {
                       title: Row(
                         children: [
                           Text(
-                            DateFormat('yyyy/MM/dd E')
-                                .format(timecard.targetDate),
+                            DateFormat.yMMMEd('ja').format(timecard.targetDate),
                             style: TextStyle(
                               fontSize: 18,
                             ),
                           ),
-                          SizedBox(width: 4),
+                          SizedBox(width: 8),
                           Text(
                             timecard.startTimeString,
                             style: TextStyle(
                               fontSize: 18,
                             ),
                           ),
-                          SizedBox(width: 4),
+                          SizedBox(width: 8),
                           Text(
                             timecard.endTimeString,
                             style: TextStyle(
@@ -49,8 +48,21 @@ class HistoryPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onTap: () {
-                        print(timecard.targetDate.toString());
+                      onTap: () async {
+                        final bool? isEdited = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditPage(timecard: timecard),
+                          ),
+                        );
+                        if (isEdited != null && isEdited) {
+                          final snackBar = SnackBar(
+                            backgroundColor: Colors.green,
+                            content: Text('更新しました'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                        model.fetchTimeCards();
                       },
                     ),
                   ),
@@ -71,7 +83,7 @@ class HistoryPage extends StatelessWidget {
               final bool? isAdded = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddPage(),
+                  builder: (context) => EditPage(),
                   fullscreenDialog: true,
                 ),
               );
