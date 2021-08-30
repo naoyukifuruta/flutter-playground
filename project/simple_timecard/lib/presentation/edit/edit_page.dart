@@ -158,7 +158,11 @@ class EditPage extends StatelessWidget {
                             ),
                             onPressed: () async {
                               try {
-                                //await model.addBook();
+                                if (isAdd) {
+                                  await model.add();
+                                } else {
+                                  await model.update();
+                                }
                                 Navigator.of(context).pop(true);
                               } catch (e) {
                                 final snackBar = SnackBar(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_timecard/domain/timecard.dart';
+import 'package:simple_timecard/domain/timecard_repository.dart';
 
 class EditModel extends ChangeNotifier {
   DateTime? selectedDate;
@@ -37,4 +38,14 @@ class EditModel extends ChangeNotifier {
     this.selectedEndTime = time.hour.toString() + ':' + time.minute.toString();
     notifyListeners();
   }
+
+  Future add() async {
+    // TODO: バリデーション
+
+    await TimecardRepository.create(
+        selectedDate!, selectedStartTime!, selectedEndTime!);
+    notifyListeners();
+  }
+
+  Future update() async {}
 }

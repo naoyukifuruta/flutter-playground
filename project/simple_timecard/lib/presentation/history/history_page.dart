@@ -17,7 +17,8 @@ class HistoryPage extends StatelessWidget {
             final List<TimeCard>? timecards = model.timecards;
 
             if (timecards == null) {
-              return CircularProgressIndicator();
+              //return CircularProgressIndicator();
+              return Text('date empty.');
             }
 
             final List<Widget> widgets = timecards
