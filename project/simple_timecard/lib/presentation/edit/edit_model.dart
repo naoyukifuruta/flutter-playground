@@ -26,8 +26,9 @@ class EditModel extends ChangeNotifier {
     if (time == null) {
       return;
     }
-    this.selectedStartTime =
-        time.hour.toString() + ':' + time.minute.toString();
+    this.selectedStartTime = time.hour.toString().padLeft(2, "0") +
+        ':' +
+        time.minute.toString().padLeft(2, "0");
     notifyListeners();
   }
 
@@ -35,7 +36,9 @@ class EditModel extends ChangeNotifier {
     if (time == null) {
       return;
     }
-    this.selectedEndTime = time.hour.toString() + ':' + time.minute.toString();
+    this.selectedEndTime = time.hour.toString().padLeft(2, "0") +
+        ':' +
+        time.minute.toString().padLeft(2, "0");
     notifyListeners();
   }
 
