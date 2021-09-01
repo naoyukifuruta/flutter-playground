@@ -65,6 +65,40 @@ class HistoryPage extends StatelessWidget {
                         }
                         model.fetchTimeCards();
                       },
+                      onLongPress: () async {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (_) {
+                            return AlertDialog(
+                              title: Text("削除の確認"),
+                              content: Text(
+                                  "『${DateFormat.yMMMEd('ja').format(timecard.targetDate)}』を削除しますか？"),
+                              actions: [
+                                TextButton(
+                                  child: Text("Cancel"),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                                TextButton(
+                                  child: Text("OK"),
+                                  onPressed: () async {
+                                    // TODO: 削除
+                                    Navigator.pop(context);
+                                    final snackBar = SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                          '${DateFormat.yMMMEd('ja').format(timecard.targetDate)}を削除しました'),
+                                    );
+                                    model.fetchTimeCards();
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
                     ),
                   ),
                 )
