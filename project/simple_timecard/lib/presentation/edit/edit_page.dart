@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_timecard/common/navigate_state.dart';
 import 'package:simple_timecard/domain/timecard.dart';
 
 import 'edit_model.dart';
@@ -23,6 +24,37 @@ class EditPage extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.black),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.delete_rounded),
+              onPressed: () async {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (_) {
+                    return AlertDialog(
+                      title: Text("確認"),
+                      content: Text("削除しますか？"),
+                      actions: [
+                        TextButton(
+                          child: Text("Cancel"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        TextButton(
+                          child: Text("OK"),
+                          onPressed: () async {
+                            // TODO: 削除
+                            Navigator.pop(context);
+                            Navigator.of(context).pop(NavigateState.Delete);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          ],
         ),
         body: Center(
           child: Consumer<EditModel>(builder: (context, model, child) {
@@ -158,12 +190,13 @@ class EditPage extends StatelessWidget {
                             ),
                             onPressed: () async {
                               try {
+                                NavigateState state = NavigateState.None;
                                 if (isAdd) {
-                                  await model.add();
+                                  state = await model.add();
                                 } else {
-                                  await model.update();
+                                  state = await model.update();
                                 }
-                                Navigator.of(context).pop(true);
+                                Navigator.of(context).pop(state);
                               } catch (e) {
                                 final snackBar = SnackBar(
                                   backgroundColor: Colors.red,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_timecard/common/navigate_state.dart';
 import 'package:simple_timecard/domain/timecard.dart';
 import 'package:simple_timecard/domain/timecard_repository.dart';
 
@@ -42,13 +43,17 @@ class EditModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future add() async {
+  Future<NavigateState> add() async {
     // TODO: バリデーション
 
     await TimecardRepository.create(
         selectedDate!, selectedStartTime!, selectedEndTime!);
     notifyListeners();
+
+    return NavigateState.Add;
   }
 
-  Future update() async {}
+  Future<NavigateState> update() async {
+    return NavigateState.Edit;
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_timecard/common/navigate_state.dart';
 import 'package:simple_timecard/domain/timecard.dart';
 import 'package:simple_timecard/presentation/edit/edit_page.dart';
 
@@ -50,54 +51,27 @@ class HistoryPage extends StatelessWidget {
                         ],
                       ),
                       onTap: () async {
-                        final bool? isEdited = await Navigator.push(
+                        final NavigateState? state = await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => EditPage(timecard: timecard),
                           ),
                         );
-                        if (isEdited != null && isEdited) {
+                        if (state != null && state == NavigateState.Edit) {
                           final snackBar = SnackBar(
                             backgroundColor: Colors.green,
                             content: Text('更新しました'),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } else if (state != null &&
+                            state == NavigateState.Delete) {
+                          final snackBar = SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text('削除しました'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                         model.fetchTimeCards();
-                      },
-                      onLongPress: () async {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (_) {
-                            return AlertDialog(
-                              title: Text("削除の確認"),
-                              content: Text(
-                                  "『${DateFormat.yMMMEd('ja').format(timecard.targetDate)}』を削除しますか？"),
-                              actions: [
-                                TextButton(
-                                  child: Text("Cancel"),
-                                  onPressed: () => Navigator.pop(context),
-                                ),
-                                TextButton(
-                                  child: Text("OK"),
-                                  onPressed: () async {
-                                    // TODO: 削除
-                                    Navigator.pop(context);
-                                    final snackBar = SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content: Text(
-                                          '${DateFormat.yMMMEd('ja').format(timecard.targetDate)}を削除しました'),
-                                    );
-                                    model.fetchTimeCards();
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
                       },
                     ),
                   ),
@@ -115,7 +89,7 @@ class HistoryPage extends StatelessWidget {
             backgroundColor: Colors.white,
             onPressed: () async {
               // 画面遷移
-              final bool? isAdded = await Navigator.push(
+              final NavigateState? state = await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => EditPage(),
@@ -123,7 +97,7 @@ class HistoryPage extends StatelessWidget {
                 ),
               );
 
-              if (isAdded != null && isAdded) {
+              if (state != null && state == NavigateState.Add) {
                 final snackBar = SnackBar(
                   backgroundColor: Colors.green,
                   content: Text('追加しました'),
