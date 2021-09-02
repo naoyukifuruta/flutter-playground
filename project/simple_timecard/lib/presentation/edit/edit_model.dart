@@ -54,6 +54,12 @@ class EditModel extends ChangeNotifier {
   }
 
   Future<NavigateState> update() async {
+    // TODO: バリデーション
     return NavigateState.Edit;
+  }
+
+  Future delete() async {
+    // TODO: 削除処理実装
+    return NavigateState.Delete;
   }
 }

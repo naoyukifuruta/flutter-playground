@@ -43,8 +43,15 @@ class EditPage extends StatelessWidget {
                         TextButton(
                           child: Text("OK"),
                           onPressed: () async {
-                            // TODO: 削除
+                            // final model = Provider.of<EditModel>(context);
+                            //
+                            // // 削除
+                            // model.delete();
+
+                            // ダイアログを閉じる
                             Navigator.pop(context);
+
+                            // 前画面に戻る
                             Navigator.of(context).pop(NavigateState.Delete);
                           },
                         ),
