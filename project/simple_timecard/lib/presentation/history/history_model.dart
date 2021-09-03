@@ -4,6 +4,7 @@ import 'package:simple_timecard/domain/timecard_repository.dart';
 
 class HistoryModel extends ChangeNotifier {
   List<TimeCard>? timecards;
+  DateTime displayDate = DateTime.now();
 
   void fetchTimeCards() async {
     // List<TimeCard> testData = [
@@ -17,6 +18,23 @@ class HistoryModel extends ChangeNotifier {
     // ];
     // this.timecards = testData;
     this.timecards = await TimecardRepository.getAll();
+    notifyListeners();
+  }
+
+  void setDisplayDate(DateTime dateTime) {
+    this.displayDate = dateTime;
+    notifyListeners();
+  }
+
+  void setPrevMonth() {
+    this.displayDate =
+        DateTime(this.displayDate.year, this.displayDate.month - 1);
+    notifyListeners();
+  }
+
+  void setNextMonth() {
+    this.displayDate =
+        DateTime(this.displayDate.year, this.displayDate.month + 1);
     notifyListeners();
   }
 }

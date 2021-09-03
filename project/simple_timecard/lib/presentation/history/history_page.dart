@@ -83,16 +83,63 @@ class HistoryPage extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: ElevatedButton(
-                      child: Text('aaa'),
-                      onPressed: () {
-                        showMonthPicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(DateTime.now().year - 1),
-                          lastDate: DateTime(DateTime.now().year + 1),
-                        );
-                      }),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text('＜',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.black)),
+                          onPressed: () {
+                            model.setPrevMonth();
+                          }),
+                      SizedBox(width: 8),
+                      SizedBox(
+                        width: 120,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: Text(
+                                DateFormat.yMMM('ja').format(model.displayDate),
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            onPressed: () async {
+                              var selectedDate = await showMonthPicker(
+                                context: context,
+                                initialDate: model.displayDate,
+                                firstDate: DateTime(DateTime.now().year - 1),
+                                lastDate: DateTime(DateTime.now().year + 1),
+                              );
+                              if (selectedDate == null) return;
+                              model.setDisplayDate(selectedDate);
+                            }),
+                      ),
+                      SizedBox(width: 8),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text('＞',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.black)),
+                          onPressed: () {
+                            model.setNextMonth();
+                          }),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: ListView(
