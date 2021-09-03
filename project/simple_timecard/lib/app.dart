@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_timecard/presentation/history/history_page.dart';
 import 'package:simple_timecard/presentation/setting/setting_page.dart';
@@ -10,6 +11,13 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('ja'),
+      ],
       debugShowCheckedModeBanner: false, // debugアイコンを非表示に
       home: Scaffold(
         resizeToAvoidBottomInset: false, // キーボードによる画面リサイズを無効
