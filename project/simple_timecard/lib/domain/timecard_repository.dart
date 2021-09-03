@@ -33,7 +33,7 @@ class TimecardRepository {
     final Database db = await instance.database;
 
     final rows =
-        await db.rawQuery('SELECT * FROM $table ORDER BY updatedAt DESC');
+        await db.rawQuery('SELECT * FROM $table ORDER BY targetAt ASC');
     if (rows.isEmpty) return null;
     return rows.map((json) => TimeCard.fromMap(json)).toList();
   }
