@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_timecard/common/navigate_state.dart';
 import 'package:simple_timecard/domain/timecard.dart';
@@ -13,76 +14,95 @@ class HistoryPage extends StatelessWidget {
     return ChangeNotifierProvider<HistoryModel>(
       create: (_) => HistoryModel()..fetchTimeCards(),
       child: Scaffold(
-        body: Center(
-          child: Consumer<HistoryModel>(builder: (context, model, child) {
-            final List<TimeCard>? timecards = model.timecards;
+        body: Consumer<HistoryModel>(builder: (context, model, child) {
+          final List<TimeCard>? timecards = model.timecards;
 
-            if (timecards == null) {
-              //return CircularProgressIndicator();
-              return Text('date empty.');
-            }
+          if (timecards == null) {
+            //return CircularProgressIndicator();
+            return Text('date empty.');
+          }
 
-            final List<Widget> widgets = timecards
-                .map(
-                  (timecard) => Card(
-                    child: ListTile(
-                      title: Row(
-                        children: [
-                          Text(
-                            DateFormat.yMMMEd('ja').format(timecard.targetDate),
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
+          final List<Widget> widgets = timecards
+              .map(
+                (timecard) => Card(
+                  child: ListTile(
+                    title: Row(
+                      children: [
+                        Text(
+                          DateFormat.yMMMEd('ja').format(timecard.targetDate),
+                          style: TextStyle(
+                            fontSize: 18,
                           ),
-                          SizedBox(width: 8),
-                          Text(
-                            timecard.startTimeString,
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          timecard.startTimeString,
+                          style: TextStyle(
+                            fontSize: 18,
                           ),
-                          SizedBox(width: 8),
-                          Text(
-                            timecard.endTimeString,
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          timecard.endTimeString,
+                          style: TextStyle(
+                            fontSize: 18,
                           ),
-                        ],
-                      ),
-                      onTap: () async {
-                        final NavigateState? state = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditPage(timecard: timecard),
-                          ),
-                        );
-                        if (state != null && state == NavigateState.Edit) {
-                          final snackBar = SnackBar(
-                            backgroundColor: Colors.green,
-                            content: Text('更新しました'),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        } else if (state != null &&
-                            state == NavigateState.Delete) {
-                          final snackBar = SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Text('削除しました'),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }
-                        model.fetchTimeCards();
-                      },
+                        ),
+                      ],
                     ),
+                    onTap: () async {
+                      final NavigateState? state = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditPage(timecard: timecard),
+                        ),
+                      );
+                      if (state != null && state == NavigateState.Edit) {
+                        final snackBar = SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text('更新しました'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } else if (state != null &&
+                          state == NavigateState.Delete) {
+                        final snackBar = SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('削除しました'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                      model.fetchTimeCards();
+                    },
                   ),
-                )
-                .toList();
+                ),
+              )
+              .toList();
 
-            return ListView(
-              children: widgets,
-            );
-          }),
-        ),
+          return Container(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ElevatedButton(
+                      child: Text('aaa'),
+                      onPressed: () {
+                        showMonthPicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(DateTime.now().year - 1),
+                          lastDate: DateTime(DateTime.now().year + 1),
+                        );
+                      }),
+                ),
+                Expanded(
+                  child: ListView(
+                    children: widgets,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
         floatingActionButton:
             Consumer<HistoryModel>(builder: (context, model, child) {
           return FloatingActionButton(

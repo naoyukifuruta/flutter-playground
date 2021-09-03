@@ -8,7 +8,7 @@ import 'edit_model.dart';
 
 class EditPage extends StatelessWidget {
   EditPage({this.timecard});
-  TimeCard? timecard;
+  final TimeCard? timecard;
 
   @override
   Widget build(BuildContext context) {
@@ -25,42 +25,43 @@ class EditPage extends StatelessWidget {
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.black),
           actions: [
-            IconButton(
-              icon: Icon(Icons.delete_rounded),
-              onPressed: () async {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (_) {
-                    return AlertDialog(
-                      title: Text("確認"),
-                      content: Text("削除しますか？"),
-                      actions: [
-                        TextButton(
-                          child: Text("Cancel"),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        TextButton(
-                          child: Text("OK"),
-                          onPressed: () async {
-                            // final model = Provider.of<EditModel>(context);
-                            //
-                            // // 削除
-                            // model.delete();
+            Consumer<EditModel>(builder: (context, model, _) {
+              return IconButton(
+                icon: Icon(Icons.delete_rounded),
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: Text("確認"),
+                        content: Text("削除しますか？"),
+                        actions: [
+                          TextButton(
+                            child: Text("キャンセル"),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                          TextButton(
+                            child:
+                                Text("削除", style: TextStyle(color: Colors.red)),
+                            onPressed: () async {
+                              // 削除
+                              await model.delete();
 
-                            // ダイアログを閉じる
-                            Navigator.pop(context);
+                              // ダイアログを閉じる
+                              Navigator.pop(context);
 
-                            // 前画面に戻る
-                            Navigator.of(context).pop(NavigateState.Delete);
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-            ),
+                              // 前画面に戻る
+                              Navigator.of(context).pop(NavigateState.Delete);
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              );
+            }),
           ],
         ),
         body: Center(
