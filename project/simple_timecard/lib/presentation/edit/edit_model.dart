@@ -5,6 +5,7 @@ import 'package:simple_timecard/domain/timecard.dart';
 import 'package:simple_timecard/domain/timecard_repository.dart';
 
 class EditModel extends ChangeNotifier {
+  int? timecardId;
   DateTime? selectedDate;
   String? selectedStartTime;
   String? selectedEndTime;
@@ -13,6 +14,7 @@ class EditModel extends ChangeNotifier {
     if (timecard == null) {
       return;
     }
+    this.timecardId = timecard.id;
     this.selectedDate = timecard.targetDate;
     this.selectedStartTime = timecard.startTimeString;
     this.selectedEndTime = timecard.endTimeString;
@@ -59,7 +61,11 @@ class EditModel extends ChangeNotifier {
   }
 
   Future delete() async {
-    // TODO: 削除処理実装
+    if (this.timecardId == null) {
+      // TODO:
+      return NavigateState.None;
+    }
+    await TimecardRepository.deleteTimecard(this.timecardId!);
     return NavigateState.Delete;
   }
 }

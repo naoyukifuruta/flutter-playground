@@ -26,6 +26,7 @@ class EditPage extends StatelessWidget {
           iconTheme: IconThemeData(color: Colors.black),
           actions: [
             Consumer<EditModel>(builder: (context, model, _) {
+              if (isAdd == true) return SizedBox();
               return IconButton(
                 icon: Icon(Icons.delete_rounded),
                 onPressed: () async {
