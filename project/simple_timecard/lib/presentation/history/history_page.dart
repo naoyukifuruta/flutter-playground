@@ -16,67 +16,67 @@ class HistoryPage extends StatelessWidget {
       child: Scaffold(
         body: Consumer<HistoryModel>(builder: (context, model, child) {
           final List<TimeCard>? timecards = model.timecards;
-
-          if (timecards == null) {
-            //return CircularProgressIndicator();
-            return Text('date empty.');
-          }
-
-          final List<Widget> widgets = timecards
-              .map(
-                (timecard) => Card(
-                  child: ListTile(
-                    title: Row(
-                      children: [
-                        Text(
-                          DateFormat.yMMMEd('ja').format(timecard.targetDate),
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
+          final List<Widget>? widgets = timecards == null
+              ? null
+              : timecards
+                  .map(
+                    (timecard) => Card(
+                      child: ListTile(
+                        title: Row(
+                          children: [
+                            Text(
+                              DateFormat.yMMMEd('ja')
+                                  .format(timecard.targetDate),
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              timecard.startTimeString,
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              timecard.endTimeString,
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 8),
-                        Text(
-                          timecard.startTimeString,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Text(
-                          timecard.endTimeString,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
+                        onTap: () async {
+                          final NavigateState? state = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  EditPage(timecard: timecard),
+                            ),
+                          );
+                          if (state != null && state == NavigateState.Edit) {
+                            final snackBar = SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text('更新しました'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } else if (state != null &&
+                              state == NavigateState.Delete) {
+                            final snackBar = SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text('削除しました'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                          model.fetchTimeCards();
+                        },
+                      ),
                     ),
-                    onTap: () async {
-                      final NavigateState? state = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditPage(timecard: timecard),
-                        ),
-                      );
-                      if (state != null && state == NavigateState.Edit) {
-                        final snackBar = SnackBar(
-                          backgroundColor: Colors.green,
-                          content: Text('更新しました'),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      } else if (state != null &&
-                          state == NavigateState.Delete) {
-                        final snackBar = SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text('削除しました'),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                      model.fetchTimeCards();
-                    },
-                  ),
-                ),
-              )
-              .toList();
+                  )
+                  .toList();
 
           return Container(
             child: Column(
@@ -142,9 +142,11 @@ class HistoryPage extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: ListView(
-                    children: widgets,
-                  ),
+                  child: widgets == null
+                      ? Center(child: Text('no entry.'))
+                      : ListView(
+                          children: widgets,
+                        ),
                 ),
               ],
             ),
@@ -155,6 +157,27 @@ class HistoryPage extends StatelessWidget {
           return FloatingActionButton(
             backgroundColor: Colors.white,
             onPressed: () async {
+              // showModalBottomSheet(
+              //     //モーダルの背景の色、透過
+              //     backgroundColor: Colors.transparent,
+              //     //ドラッグ可能にする（高さもハーフサイズからフルサイズになる様子）
+              //     isScrollControlled: true,
+              //     context: context,
+              //     builder: (BuildContext context) {
+              //       return Container(
+              //           margin: EdgeInsets.only(top: 64),
+              //           decoration: BoxDecoration(
+              //             //モーダル自体の色
+              //             color: Colors.white,
+              //             //角丸にする
+              //             borderRadius: BorderRadius.only(
+              //               topLeft: Radius.circular(20),
+              //               topRight: Radius.circular(20),
+              //             ),
+              //           ),
+              //           child: EditPage());
+              //     });
+
               // 画面遷移
               final NavigateState? state = await Navigator.push(
                 context,
