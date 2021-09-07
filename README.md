@@ -1,4 +1,6 @@
-# Flutter Study Repos
+# Flutter勉強用リポジトリ
 
-## TBD
-
+- 勉強の足跡
+- パッケージの検証、導入
+- サンプルアプリの試実装
+- etc..
