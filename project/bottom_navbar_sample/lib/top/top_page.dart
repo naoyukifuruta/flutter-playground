@@ -14,14 +14,12 @@ class TopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double deviceHeight = MediaQuery.of(context).size.height;
     return ChangeNotifierProvider<TopModel>(
       create: (_) => TopModel(),
       child: Consumer<TopModel>(
         builder: (context, model, child) {
           return Scaffold(
               appBar: AppBar(
-                toolbarHeight: deviceHeight * 0.06,
                 centerTitle: true,
                 title: Text(
                   _tabNames[model.currentIndex],
@@ -31,22 +29,21 @@ class TopPage extends StatelessWidget {
               ),
               body: _topPageBody(context),
               bottomNavigationBar: SizedBox(
-                height: deviceHeight * 0.1,
                 child: BottomNavigationBar(
                   onTap: model.onTabTapped,
                   currentIndex: model.currentIndex,
                   type: BottomNavigationBarType.fixed,
                   items: [
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.today),
+                      icon: Icon(Icons.filter_1),
                       label: _tabNames[0],
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.history),
+                      icon: Icon(Icons.filter_2),
                       label: _tabNames[1],
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.settings),
+                      icon: Icon(Icons.filter_3),
                       label: _tabNames[2],
                     ),
                   ],
