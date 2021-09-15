@@ -1,16 +1,24 @@
 # darkmode_switch_sample
 
-A new Flutter project.
+アプリ内でダークモードへの切り替えを実装するサンプル。
 
-## Getting Started
+状態管理にprovider、設定の保存にはshared_preferencesを用いている。
 
-This project is a starting point for a Flutter application.
+## 導入パッケージ
 
-A few resources to get you started if this is your first Flutter project:
+```yaml
+provider: ^5.0.0
+shared_preferences: ^2.0.7
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+※どちらもダークモードの対応に必須というわけではない
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 動作の様子
+
+iOS / Android
+
+<img src='https://user-images.githubusercontent.com/12977376/133448876-4015bf4e-b13f-4a9c-84da-e2c6bfc64eeb.gif'><img src='https://user-images.githubusercontent.com/12977376/133448886-091eac55-4c5e-4bf3-9ea2-739141f8135e.gif'>
+
+
+
+gifが汚い（笑）
