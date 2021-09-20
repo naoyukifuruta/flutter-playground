@@ -14,3 +14,7 @@
 
 - [【2021年8月最新】Firestoreのdeleteメソッドで値を削除しよう - YouTube](https://www.youtube.com/watch?v=yeogWgsPqLE&t=4s)
 
+- [【2021年9月最新】Firebaseに画像をアップロードして表示しよう](https://www.youtube.com/watch?v=VZZx7YONWhc)
+
+  
+
