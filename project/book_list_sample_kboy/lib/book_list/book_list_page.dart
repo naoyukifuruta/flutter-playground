@@ -1,6 +1,7 @@
 import 'package:book_list_sample_kboy/add_book/add_book_page.dart';
 import 'package:book_list_sample_kboy/domain/book.dart';
 import 'package:book_list_sample_kboy/edit_book/edit_book_page.dart';
+import 'package:book_list_sample_kboy/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,19 @@ class BookListPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('本一覧'),
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
+                icon: Icon(Icons.person)),
+          ],
         ),
         body: Center(
           child: Consumer<BookListModel>(builder: (context, model, child) {
