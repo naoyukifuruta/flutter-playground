@@ -49,30 +49,14 @@ class _MyHomePageState extends State<MyHomePage> {
         onPointerMove: (moveEvent) async {
           if (moveEvent.delta.dx > 0) {
             print("swipe right");
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) {
-                return AlertDialog(
-                  title: const Text("Alert"),
-                  content: const Text("スワイプ検知"),
-                  actions: [
-                    TextButton(
-                      child: const Text("Cancel"),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    TextButton(
-                      child: const Text("OK"),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                );
-              },
-            );
+            showAlertDialog(context);
+            return;
           }
 
           if (moveEvent.delta.dx < 0) {
             print("swipe left");
+            showAlertDialog(context);
+            return;
           }
         },
         behavior: HitTestBehavior.opaque,
@@ -84,6 +68,25 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+    );
+  }
+
+  void showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return AlertDialog(
+          title: const Text("Alert"),
+          content: const Text("スワイプ検知"),
+          actions: [
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
+      },
     );
   }
 }

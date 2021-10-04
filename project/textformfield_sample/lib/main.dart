@@ -37,11 +37,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   String _text1 = '';
+  String _text2 = '';
   TextEditingController _textEditingController1 = TextEditingController();
   TextEditingController _textEditingController2 = TextEditingController();
 
-  final _focusNodeFirst = FocusNode();
-  final _focusNodeSecond = FocusNode();
+  final _focusNode1 = FocusNode();
+  final _focusNode2 = FocusNode();
 
   @override
   void initState() {
@@ -49,26 +50,32 @@ class _MyHomePageState extends State<MyHomePage> {
     _textEditingController1 = TextEditingController(text: '');
     _textEditingController2 = TextEditingController(text: '');
 
-    _focusNodeFirst.addListener(() {
-      if (_focusNodeFirst.hasFocus) {
-        print('From1 フォーカスした');
+    _focusNode1.addListener(() {
+      if (_focusNode1.hasFocus) {
+        print('From1 Forcus on');
       } else {
-        print('From1 フォーカスが外れた');
+        print('From1 Forcus out');
+        setState(() {
+          _text1 = _textEditingController1.text;
+        });
       }
     });
-    _focusNodeSecond.addListener(() {
-      if (_focusNodeSecond.hasFocus) {
-        print('From2 フォーカスした');
-        _textEditingController2.text = _textEditingController1.text;
+    _focusNode2.addListener(() {
+      if (_focusNode2.hasFocus) {
+        print('From2 Forcus on');
       } else {
-        print('From2 フォーカスが外れた');
+        print('From1 Forcus out');
+        setState(() {
+          _text2 = _textEditingController2.text;
+        });
       }
     });
   }
 
   @override
   void dispose() {
-    _focusNodeFirst.dispose();
+    _focusNode1.dispose();
+    _focusNode2.dispose();
     super.dispose();
   }
 
@@ -82,38 +89,29 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Text(_text1),
                   TextFormField(
                     decoration: const InputDecoration(
-                      border: OutlineInputBorder(), // 外枠付きデザイン
+                      border: OutlineInputBorder(),
                     ),
                     controller: _textEditingController1,
-                    focusNode: _focusNodeFirst,
-                    onChanged: (value) {
-                      setState(() {
-                        _text1 = value;
-                      });
-                    },
+                    focusNode: _focusNode1,
                   ),
-                  const SizedBox(height: 4.0),
+                  const SizedBox(height: 8.0),
+                  Text(_text1),
+                  const SizedBox(height: 32.0),
                   TextFormField(
                     decoration: const InputDecoration(
-                      border: OutlineInputBorder(), // 外枠付きデザイン
+                      border: OutlineInputBorder(),
                     ),
                     controller: _textEditingController2,
-                    focusNode: _focusNodeSecond,
+                    focusNode: _focusNode2,
                   ),
+                  const SizedBox(height: 8.0),
+                  Text(_text2),
                 ],
               ),
             ),
