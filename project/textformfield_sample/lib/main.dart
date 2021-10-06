@@ -1,127 +1,101 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'main_model.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final forcus1 = FocusNode();
+  final forcus2 = FocusNode();
+  final forcus3 = FocusNode();
+  final forcus4 = FocusNode();
+  final forcus5 = FocusNode();
 
   @override
   Widget build(BuildContext context) {
+    forcus1.addListener(() {
+      if (!forcus1.hasPrimaryFocus) {
+        print('forcus1 out');
+      }
+    });
+    forcus2.addListener(() {
+      if (!forcus2.hasPrimaryFocus) {
+        print('forcus2 out');
+      }
+    });
+    forcus3.addListener(() {
+      if (!forcus3.hasPrimaryFocus) {
+        print('forcus3 out');
+      }
+    });
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  String _text1 = '';
-  String _text2 = '';
-  TextEditingController _textEditingController1 = TextEditingController();
-  TextEditingController _textEditingController2 = TextEditingController();
-
-  final _focusNode1 = FocusNode();
-  final _focusNode2 = FocusNode();
-
-  @override
-  void initState() {
-    super.initState();
-    _textEditingController1 = TextEditingController(text: '');
-    _textEditingController2 = TextEditingController(text: '');
-
-    _focusNode1.addListener(() {
-      if (_focusNode1.hasFocus) {
-        print('From1 Forcus on');
-      } else {
-        print('From1 Forcus out');
-        setState(() {
-          _text1 = _textEditingController1.text;
-        });
-      }
-    });
-    _focusNode2.addListener(() {
-      if (_focusNode2.hasFocus) {
-        print('From2 Forcus on');
-      } else {
-        print('From1 Forcus out');
-        setState(() {
-          _text2 = _textEditingController2.text;
-        });
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _focusNode1.dispose();
-    _focusNode2.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                    ),
-                    controller: _textEditingController1,
-                    focusNode: _focusNode1,
+      home: ChangeNotifierProvider<MainModel>(
+        create: (_) => MainModel(),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('home'),
+          ),
+          body: Consumer<MainModel>(builder: (context, model, child) {
+            return Center(
+                child: Column(
+              children: [
+                TextFormField(
+                  //initialValue: model.patientModel.patient_name,
+                  focusNode: forcus1,
+                  keyboardType: TextInputType.text,
+                  maxLength: 15,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Theme.of(context).focusColor,
                   ),
-                  const SizedBox(height: 8.0),
-                  Text(_text1),
-                  const SizedBox(height: 32.0),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                    ),
-                    controller: _textEditingController2,
-                    focusNode: _focusNode2,
+                  onSaved: (value) {
+                    print('on saved');
+                  },
+                  onFieldSubmitted: (value) {
+                    print('on submit');
+                  },
+                  validator: (value) {},
+                ),
+                TextFormField(
+                  //initialValue: model.patientModel.patient_name,
+                  focusNode: forcus2,
+                  keyboardType: TextInputType.text,
+                  maxLength: 16,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Theme.of(context).focusColor,
                   ),
-                  const SizedBox(height: 8.0),
-                  Text(_text2),
-                ],
-              ),
-            ),
-          ],
+                  onSaved: (value) {
+                    print('on saved');
+                  },
+                  onFieldSubmitted: (value) {
+                    print('on submit');
+                  },
+                ),
+                TextFormField(
+                  //initialValue: model.patientModel.patient_name,
+                  focusNode: forcus3,
+                  keyboardType: TextInputType.text,
+                  maxLength: 16,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Theme.of(context).focusColor,
+                  ),
+                  onSaved: (value) {
+                    print('on saved');
+                  },
+                  onFieldSubmitted: (value) {
+                    print('on submit');
+                  },
+                ),
+              ],
+            ));
+          }),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
