@@ -10,6 +10,7 @@ class RegisterPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('サインアップ'),
+          centerTitle: true,
         ),
         body: Center(
           child: Consumer<RegisterModel>(builder: (context, model, child) {

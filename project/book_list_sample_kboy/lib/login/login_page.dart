@@ -12,6 +12,7 @@ class LoginPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('ログイン'),
+          centerTitle: true,
         ),
         body: Center(
           child: Consumer<LoginModel>(builder: (context, model, child) {
@@ -34,6 +35,7 @@ class LoginPage extends StatelessWidget {
                       TextField(
                         controller: model.authorController,
                         decoration: InputDecoration(hintText: 'Password'),
+                        obscureText: true,
                         onChanged: (text) {
                           model.setPassword(text);
                         },
