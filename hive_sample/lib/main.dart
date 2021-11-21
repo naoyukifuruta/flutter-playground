@@ -5,6 +5,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   await Hive.initFlutter();
   var box = await Hive.openBox('sample');
+  box.put('hoge', 1);
+  print('${box.get('hoge')}');
+  box.delete('hoge');
+  box.close();
   runApp(const MyApp());
 }
 
