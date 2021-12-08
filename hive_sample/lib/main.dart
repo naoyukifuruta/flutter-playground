@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'person.dart';
+
 void main() async {
   await Hive.initFlutter();
-  var box = await Hive.openBox('sample');
-  box.put('hoge', 1);
-  print('${box.get('hoge')}');
-  box.delete('hoge');
+  Hive.registerAdapter(PersonAdapter());
+
+  final box = await Hive.openBox<Person>('Person');
+  box.add(Person(name: 'Taro Yamada', age: 30));
+  final persons = box.values.toList();
   box.close();
+
   runApp(const MyApp());
 }
 
