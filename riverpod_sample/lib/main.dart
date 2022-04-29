@@ -7,23 +7,26 @@ final counterProvider = StateNotifierProvider((ref) => Counter());
 
 void main() {
   runApp(
-    ProviderScope(
+    const ProviderScope(
       child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return const MaterialApp(
       home: SampleWidget(),
     );
   }
 }
 
 class SampleWidget extends ConsumerWidget {
+  const SampleWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final count = ref.watch(counterProvider);
