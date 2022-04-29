@@ -12,18 +12,20 @@ Future main() async {
   runApp(
     ChangeNotifierProvider(
       create: (_) => AppTheme(isDarkPrefValue),
-      child: App(),
+      child: const App(),
     ),
   );
 }
 
 class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<AppTheme>(context);
     return MaterialApp(
       theme: theme.buildTheme(),
-      home: Scaffold(
+      home: const Scaffold(
         body: MainPage(),
       ),
     );
@@ -31,6 +33,8 @@ class App extends StatelessWidget {
 }
 
 class MainPage extends StatelessWidget {
+  const MainPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<AppTheme>(context);
