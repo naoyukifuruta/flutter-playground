@@ -49,10 +49,9 @@ class BasePage extends HookWidget {
             _navigatorKeys[selectedTab]
                 ?.currentState
                 ?.popUntil((route) => route.isFirst);
-          } else {
-            // 未選択
-            currentTab.value = selectedTab;
+            return;
           }
+          currentTab.value = selectedTab;
         },
       ),
     );
