@@ -1,52 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'counter.dart';
+part 'main.g.dart';
 
-final counterProvider = StateNotifierProvider((ref) => Counter());
+@riverpod
+String hello(HelloRef ref) => 'hello';
 
-void main() {
-  runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const ProviderScope(child: Home()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: SampleWidget(),
-    );
-  }
-}
-
-class SampleWidget extends ConsumerWidget {
-  const SampleWidget({Key? key}) : super(key: key);
+class Home extends ConsumerWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final count = ref.watch(counterProvider);
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'クリックの回数',
-            ),
-            Text('$count'),
-          ],
+    final hello = ref.watch(helloProvider);
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Text(hello),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ref.read(counterProvider.notifier).increment();
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }
