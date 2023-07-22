@@ -46,3 +46,5 @@ app.*.map.json
 # temp
 /ios/Runner/GoogleService-Info.plist
 /android/app/google-services.json
+firebase_sample/lib/firebase_options.dart
+firebase_sample/ios/firebase_app_id_file.json
